@@ -1,16 +1,10 @@
 const express = require("express")
 const router =  express.Router()
 //import User tables
-const {User} = require("../models/User")
-const {Show} = require("../models/Show")
+const {Show, User} = require("../models/index")
+
 //express input validation
 const {check, validationResult} = require("express-validator")
-
-//doesnt belong
-Show.belongsTo(User)
-User.hasMany(Show)
-
-
 
 
 //GET method, get all users in db
@@ -20,15 +14,29 @@ router.get("/", async(request, response)=>{
 
 
 })
-//GET method get specific user in db
+//GET method, get specific user in db
 router.get("/:id", async(request, response)=>{
-    let index = request.params.id;
-    let user = await User.findByPk(index) //test
-    response.json(await User.findByPk(index))
-    ///
-    //console.log(Object.keys(User.prototype));
-    console.log(await user.getShows(index))
+    const primaryKey = request.params.id;
+    response.json(await User.findByPk(primaryKey));
 })
+
+
+//GET method, get shows watched by a user
+router.get("/shows/:id", async(request, response)=>{
+    const primaryKey = request.params.id;
+    const user = await User.findByPk(primaryKey) //test
+    //console.log(Object.keys(User.prototype));
+    response.json(await user.getShows(primaryKey))
+
+})
+
+//PUT method, add show if user has watched it 
+router.put("/:id", async(request, response)=>{        //needs to be completed
+    const primaryKey = request.params.id;
+    //await Show.
+})
+
+
 
 
 module.exports = router;

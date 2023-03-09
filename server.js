@@ -8,8 +8,10 @@ const {db, DataTypes} = require("./db")
 
 //import routers
 const userRouter = require("./route/users")
+const showRouter = require("./route/shows")
 
 app.use("/users", userRouter)
+app.use("/shows", showRouter)
 
 
 
