@@ -30,10 +30,20 @@ router.get("/shows/:id", async(request, response)=>{
 
 })
 
+//middleware
+router.use(express.json())
+
 //PUT method, add show if user has watched it 
-router.put("/:id", async(request, response)=>{        //needs to be completed
+router.put("/:id", async(request, response)=>{       
     const primaryKey = request.params.id;
-    //await Show.
+    const newShow = request.body
+    await Show.create({
+        title: newShow.title,
+        genre: newShow.genre,
+        rating: newShow.rating,
+        status: newShow.status,
+        userId: primaryKey
+    })
 })
 
 
